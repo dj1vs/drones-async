@@ -21,5 +21,5 @@ from app import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path(r'', views.set_status, name='set-status')
+    path('allowed_hours/', views.set_allowed_hours)
 ]
