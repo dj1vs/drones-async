@@ -30,10 +30,18 @@ def allowed_hours_callback(task):
     nurl = str(CALLBACK_URL + '/flight/edit')
     answer = {"flightID": int(result["id"]), "AllowedHours": str(result["allowed_hours"])}
     headers = {"Content-Type": "application/json", "Authorization": "Bearer " + str(result["token"])}
+
+    if (random.randint(1, 5) == 3):
+        # return
+        answer["AllowedHours"] = "error"
+    
     requests.put(nurl, json=answer, timeout=3, headers=headers)
+
 
 @api_view(['POST'])
 def set_allowed_hours(request):
+    if "token" not in request.data.keys():
+        return Response(status=status.HTTP_401_UNAUTHORIZED)
     if "token" in request.data.keys() and "pk" in request.data.keys():
         id = request.data["pk"]
         token = request.data["token"]
