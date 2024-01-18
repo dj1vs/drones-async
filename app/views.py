@@ -27,8 +27,8 @@ def allowed_hours_callback(task):
     except concurrent.futures._base.CancelledError:
         return
     
-    nurl = str(CALLBACK_URL + '/flight/edit')
-    answer = {"flightID": int(result["id"]), "AllowedHours": str(result["allowed_hours"])}
+    nurl = str(CALLBACK_URL + '/flight/set_allowed_hours')
+    answer = {"flightId": int(result["id"]), "allowedHours": str(result["allowed_hours"])}
     headers = {"Content-Type": "application/json", "Authorization": "Bearer " + str(result["token"])}
 
     if (random.randint(1, 5) == 3):
