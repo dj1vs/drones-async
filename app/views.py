@@ -11,7 +11,7 @@ executor = concurrent.futures.ThreadPoolExecutor(max_workers=1)
 
 # Create your views here.
 
-CALLBACK_URL = "http://0.0.0.0:8000"
+CALLBACK_URL = "http://127.0.0.1:80"
 
 def get_allowed_hours(pk, token):
     time.sleep(5)
