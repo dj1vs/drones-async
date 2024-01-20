@@ -27,19 +27,20 @@ def allowed_hours_callback(task):
     except concurrent.futures._base.CancelledError:
         return
     
-    nurl = str(CALLBACK_URL + '/flight/set_allowed_hours')
-    answer = {"flightId": int(result["id"]), "allowedHours": str(result["allowed_hours"])}
-    headers = {"Content-Type": "application/json", "Authorization": "Bearer " + str(result["token"])}
 
     if (random.randint(1, 5) == 3):
         # return
-        answer["AllowedHours"] = "error"
+        result["AllowedHours"] = "error"
     
-    requests.put(nurl, json=answer, timeout=3, headers=headers)
+    nurl = str(CALLBACK_URL + '/flight/set_allowed_hours?id=' + result["id"] + '&allowed_hours=' + result["allowed_hours"])
+    headers = {"Content-Type": "application/json", "Authorization": "Bearer " + str(result["token"])}
+    
+    requests.put(nurl, json={}, timeout=3, headers=headers)
 
 
 @api_view(['POST'])
 def set_allowed_hours(request):
+    print(request.data)
     if "token" not in request.data.keys():
         return Response(status=status.HTTP_401_UNAUTHORIZED)
     if "token" in request.data.keys() and "pk" in request.data.keys():
